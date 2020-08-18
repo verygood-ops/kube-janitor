@@ -7,8 +7,8 @@ class Slack:
     def __init__(self, config):
         self._config = config
         self._client = WebClient(os.environ['SLACK_TOKEN'])
+        self._username = "Kube Janitor of {}".format(os.environ['CLUSTER_NAME'])
         self._channel = config['channel']
-        self._cluster_name = os.environ['CLUSTER_NAME']
 
     def notify(self, message):
         self._post(message)
@@ -19,7 +19,7 @@ class Slack:
                 channel=self._channel,
                 text=msg,
                 as_user=False,
-                username="Kube Janitor of {}".format(self._cluster_name)
+                username=self._username
             )
             assert response["message"]["text"] == msg
         except SlackApiError as e:
