@@ -12,17 +12,7 @@ rules:
   - apiGroups:
       - ""
     resources:
-      - pods
+      - namespaces
     verbs:
-      - get
-{{- if .Values.rbac.pspEnabled }}
-  - apiGroups:
-    - {{ template "rbac.pspApiGroup" . }}
-    resources:
-    - podsecuritypolicies
-    resourceNames:
-    - {{ template "kube-janitor.fullname" . }}
-    verbs:
-    - use
-{{- end }}
+      - list
 {{- end -}}
