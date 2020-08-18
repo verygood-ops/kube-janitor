@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "kube-janitor.fullname" . }}-config
+  labels:
+    app: {{ template "kube-janitor.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+data:
+  kube-janitor.conf: |
+    {{ .Values.config | nindent 4 }}

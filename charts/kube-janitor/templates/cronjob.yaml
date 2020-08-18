@@ -1,0 +1,42 @@
+{{- $Name := include "kube-janitor.name" . -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "kube-janitor.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ $Name }}
+    helm.sh/chart: {{ include "kube-janitor.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  schedule: {{ .Values.schedule }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          containers:
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.scan_image.repository }}:{{ .Values.scan_image.tag }}"
+              imagePullPolicy: {{ .Values.scan_image.pullPolicy }}
+              volumeMounts:
+                - mountPath: "/scan/reports"
+                  name: kube-janitor-pvc
+              env:
+                - name: SLACK_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: kube-janitor
+                      key: slack_token
+              command: [ "python", "./main.py" ]
+              resources:
+                {{ .Values.resources | nindent 16 }}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/kube-janitor/
+        volumes:
+          - name: config
+            configMap:
+              name: {{ template "kube-janitor.fullname" . }}-config

@@ -1,0 +1,19 @@
+{{- if .Values.rbac.create -}}
+apiVersion: {{ template "rbac.apiVersion" . }}
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: {{ template "kube-janitor.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "kube-janitor.fullname" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ template "kube-janitor.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "kube-janitor.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end -}}

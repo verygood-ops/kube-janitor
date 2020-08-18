@@ -1,3 +1,4 @@
+import os
 from slack import WebClient
 from slack.errors import SlackApiError
 
@@ -5,7 +6,7 @@ from slack.errors import SlackApiError
 class Slack:
     def __init__(self, config):
         self._config = config
-        self._client = WebClient(token=config['token'])
+        self._client = WebClient(token=config['token'] or os.environ['SLACK_TOKEN'])
         self._channel = config['channel']
 
     def notify(self, message):
