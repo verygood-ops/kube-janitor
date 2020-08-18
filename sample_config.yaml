@@ -1,0 +1,17 @@
+kube:
+  kubectx: "kubectx"
+  kubectl: "kubectl"
+  context: ""
+
+slack:
+  token: ""
+  channel: ""
+
+resources:
+  ns:
+    whitelist:
+      - kube-system
+      - core
+      - infra
+    annotation_whitelist:
+      - "fluxcd.io"
