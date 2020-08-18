@@ -30,6 +30,8 @@ spec:
                     secretKeyRef:
                       name: kube-janitor
                       key: slack_token
+                - name: CLUSTER_NAME
+                  value: {{ .Values.cluster_name }}
               command: [ "python", "./main.py" ]
               resources:
                 {{ .Values.resources | nindent 16 }}

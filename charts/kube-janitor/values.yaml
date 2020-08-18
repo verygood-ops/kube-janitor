@@ -10,14 +10,10 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: release-0.1.0
 
-config:
-  kube:
-    kubectx: "kubectx"
-    kubectl: "kubectl"
-    context: ""
+cluster_name: ""
 
+config:
     slack:
-      #token: "" # SLACK_TOKEN
       channel: ""
 
     resources:
@@ -33,7 +29,6 @@ external_secrets:
   - key: /path/to/key
     name: slack_token
 
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -44,8 +39,6 @@ serviceAccount:
 rbac:
   # Specifies whether RBAC resources should be created
   create: true
-
-podAnnotations: {}
 
 resources:
   requests:
