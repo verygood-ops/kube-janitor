@@ -10,7 +10,11 @@ from confuse import Configuration
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-kubernetes.config.load_kube_config()
+try:
+    kubernetes.config.load_incluster_config()
+except kubernetes.config.config_exception.ConfigException:
+    kubernetes.config.load_kube_config()
+
 kube = kubernetes.client.CoreV1Api()
 config = Configuration('kube-janitor', __name__)
 slack_token = config['slack_token']
