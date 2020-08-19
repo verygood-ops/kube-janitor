@@ -4,7 +4,10 @@ slack:
 resources:
   ns:
     whitelist:
+      - default
       - kube-system
+      - kube-public
+      - kube-node-lease
       - core
       - infra
     annotation_whitelist:
