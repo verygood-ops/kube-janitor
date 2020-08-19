@@ -8,5 +8,5 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
 data:
-  kube-janitor.conf: |
+  config.yaml: |
     {{ .Values.config | nindent 4 }}
