@@ -13,6 +13,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
+      backoffLimit: 3
       template:
         spec:
           serviceAccountName: {{ template "kube-janitor.name" . }}
