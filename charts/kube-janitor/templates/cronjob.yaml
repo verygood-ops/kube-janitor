@@ -21,9 +21,6 @@ spec:
             - name: {{ .Chart.Name }}
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
               imagePullPolicy: {{ .Values.image.pullPolicy }}
-              volumeMounts:
-                - mountPath: "/scan/reports"
-                  name: kube-janitor-pvc
               env:
                 - name: SLACK_TOKEN
                   valueFrom:
@@ -35,9 +32,9 @@ spec:
               command: [ "python", "./main.py" ]
               resources:
                 {{ toYaml .Values.resources | nindent 16 }}
-            volumeMounts:
-              - name: config
-                mountPath: /etc/kube-janitor/
+              volumeMounts:
+                - name: config
+                  mountPath: /etc/kube-janitor/
           volumes:
             - name: config
               configMap:
