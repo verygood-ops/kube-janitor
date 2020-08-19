@@ -13,17 +13,17 @@ image:
 cluster_name: ""
 
 config:
-    slack:
-      channel: ""
+  slack:
+    channel: ""
 
-    resources:
-      ns:
-        whitelist:
-          - kube-system
-          - core
-          - infra
-        annotation_whitelist:
-          - fluxcd.io
+  resources:
+    ns:
+      whitelist:
+        - kube-system
+        - core
+        - infra
+      annotation_whitelist:
+        - fluxcd.io
 
 external_secrets:
   - key: /path/to/key

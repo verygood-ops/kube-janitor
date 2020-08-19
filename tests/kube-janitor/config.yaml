@@ -1,0 +1,11 @@
+slack:
+  channel: "#bots"
+
+resources:
+  ns:
+    whitelist:
+      - kube-system
+      - core
+      - infra
+    annotation_whitelist:
+      - fluxcd.io

@@ -7,9 +7,8 @@ class Janitor:
         self._config = config
 
     def suggest(self):
-        cleaners = [
+        resources = [
             kube_janitor.resources.ns.Namespace(self._kube, self._config)
         ]
-
-        res = {c.resource: c.suggest_for_deletion() for c in cleaners}
+        res = {r.resource: r.suggest_for_deletion() for r in resources}
         return res
