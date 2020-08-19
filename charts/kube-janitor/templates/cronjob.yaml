@@ -19,8 +19,8 @@ spec:
           terminationGracePeriodSeconds: 30
           containers:
             - name: {{ .Chart.Name }}
-              image: "{{ .Values.scan_image.repository }}:{{ .Values.scan_image.tag }}"
-              imagePullPolicy: {{ .Values.scan_image.pullPolicy }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
               volumeMounts:
                 - mountPath: "/scan/reports"
                   name: kube-janitor-pvc
@@ -34,7 +34,7 @@ spec:
                   value: {{ .Values.cluster_name }}
               command: [ "python", "./main.py" ]
               resources:
-                {{ .Values.resources | nindent 16 }}
+                {{ toYaml .Values.resources | nindent 16 }}
           volumeMounts:
             - name: config
               mountPath: /etc/kube-janitor/

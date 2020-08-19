@@ -9,4 +9,4 @@ metadata:
     release: {{ .Release.Name }}
 data:
   config.yaml: |
-    {{ .Values.config | nindent 4 }}
+    {{ toYaml .Values.config | nindent 4 }}
