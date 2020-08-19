@@ -43,14 +43,3 @@ rbac.authorization.k8s.io/v1beta1
 rbac.authorization.k8s.io/v1alpha1
 {{- end -}}
 {{- end -}}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "kube-janitor.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "kube-janitor.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
-{{- end -}}
-{{- end -}}

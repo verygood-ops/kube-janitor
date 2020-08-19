@@ -15,6 +15,7 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: {{ template "kube-janitor.name" . }}
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           containers:
