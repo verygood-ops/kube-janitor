@@ -23,8 +23,9 @@ slack_token = config['slack_token']
 def main():
     suggestions = kube_janitor.Janitor(kube, config).suggest()
     logger.info(f"Janitor suggests: {suggestions}")
-    msg = _format_msg(suggestions)
-    slack.Slack(config['slack']).notify(msg)
+    if suggestions:
+        msg = _format_msg(suggestions)
+        slack.Slack(config['slack']).notify(msg)
 
 
 def _format_msg(suggestions):
