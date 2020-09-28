@@ -10,5 +10,9 @@ class Janitor:
         resources = [
             kube_janitor.resources.ns.Namespace(self._kube, self._config)
         ]
-        res = {r.resource: r.suggest_for_deletion() for r in resources}
-        return res
+        suggestions = {}
+        for r in resources:
+            r_suggestions = r.suggest_for_deletion()
+            if r_suggestions:
+                suggestions[r.resource] = r_suggestions
+        return suggestions
